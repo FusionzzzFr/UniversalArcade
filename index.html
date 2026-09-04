@@ -13,9 +13,16 @@
   <section class="hero">
     <div class="saturn-mark" aria-label="Universal Arcade logo">
       <svg viewBox="0 0 220 150" role="img" aria-hidden="true">
+        <defs>
+          <clipPath id="saturn-front-clip">
+            <rect x="0" y="75" width="220" height="75"/>
+          </clipPath>
+        </defs>
         <ellipse class="saturn-ring-outline" cx="110" cy="75" rx="86" ry="27" transform="rotate(-12 110 75)"/>
         <ellipse class="saturn-ring" cx="110" cy="75" rx="86" ry="27" transform="rotate(-12 110 75)"/>
         <circle class="saturn-planet" cx="110" cy="73" r="34"/>
+        <ellipse class="saturn-ring-front-outline" cx="110" cy="75" rx="86" ry="27" transform="rotate(-12 110 75)" clip-path="url(#saturn-front-clip)"/>
+        <ellipse class="saturn-ring-front" cx="110" cy="75" rx="86" ry="27" transform="rotate(-12 110 75)" clip-path="url(#saturn-front-clip)"/>
       </svg>
     </div>
     <h1>Universal Arcade</h1>
