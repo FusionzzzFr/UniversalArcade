@@ -1,6 +1,5 @@
 const prompt = document.getElementById('prompt');
 const composer = document.getElementById('composer');
-const sendButton = document.getElementById('sendButton');
 const messages = document.getElementById('messages');
 const attachButton = document.getElementById('attachButton');
 const attachMenu = document.getElementById('attachMenu');
@@ -9,12 +8,21 @@ const fileChips = document.getElementById('fileChips');
 const thinkButton = document.getElementById('thinkButton');
 const micButton = document.getElementById('micButton');
 
-let selectedFiles = [];
+let history = [];
+let files = [];
+let busy = false;
 let recognition = null;
 let listening = false;
 
-const botIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="6" width="14" height="12" rx="3"/><circle cx="9" cy="11.8" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="11.8" r="1" fill="currentColor" stroke="none"/><path d="M9.5 15h5M9 5V3.5M15 5V3.5"/></svg>';
-const userIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 20c.7-3.5 2.8-5.2 6.5-5.2s5.8 1.7 6.5 5.2"/></svg>';
+const botIcon = '<svg viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="3"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg>';
+const userIcon = '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5.5 20c.8-3.4 2.9-5 6.5-5s5.7 1.6 6.5 5"/></svg>';
+
+function scrollDown(){
+  requestAnimationFrame(() => {
+    const area = document.getElementById('chatArea');
+    if(area) area.scrollTop = area.scrollHeight;
+  });
+}
 
 function addMessage(role, text){
   const row = document.createElement('div');
@@ -22,58 +30,78 @@ function addMessage(role, text){
   row.innerHTML = `<div class="message-avatar">${role === 'user' ? userIcon : botIcon}</div><div class="bubble"></div>`;
   row.querySelector('.bubble').textContent = text;
   messages.appendChild(row);
-  requestAnimationFrame(() => messages.parentElement.scrollTop = messages.parentElement.scrollHeight);
+  scrollDown();
 }
 
-function addTyping(){
+function typing(){
   const row = document.createElement('div');
-  row.className = 'message assistant';
   row.id = 'typingMessage';
+  row.className = 'message assistant';
   row.innerHTML = `<div class="message-avatar">${botIcon}</div><div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
   messages.appendChild(row);
-  requestAnimationFrame(() => messages.parentElement.scrollTop = messages.parentElement.scrollHeight);
+  scrollDown();
 }
 
-function removeTyping(){ document.getElementById('typingMessage')?.remove(); }
-
-function demoReply(text){
-  const value = text.toLowerCase();
-  const suffix = thinkButton.classList.contains('active') ? ' Think mode is enabled for this request.' : '';
-  if(value.includes('game')) return 'Absolutely. Tell me what kind of game you want to make and I can help plan the gameplay, UI, and code.' + suffix;
-  if(value.includes('website') || value.includes('html') || value.includes('css')) return 'I can help build that. Describe the layout and features you want, and we can turn it into a clean HTML, CSS, and JavaScript project.' + suffix;
-  if(value.includes('code')) return 'Sure. Send me what you are trying to build or the code you are working on, and I can help you fix or improve it.' + suffix;
-  return 'I’m ready to help. Universal AI is currently running in demo mode, so this page is set up for the real AI connection to be added next.' + suffix;
+function stopTyping(){
+  document.getElementById('typingMessage')?.remove();
 }
 
-function sendMessage(){
+async function sendMessage(){
+  if(busy) return;
   const text = prompt.value.trim();
-  if(!text && !selectedFiles.length) return;
-  let visibleText = text;
-  if(selectedFiles.length){
-    const names = selectedFiles.map(file => file.name).join(', ');
-    visibleText = `${text || 'Attached files'}\n\nFiles: ${names}`;
-  }
-  addMessage('user', visibleText);
+  if(!text && !files.length) return;
+
+  const shown = files.length
+    ? `${text || 'Attached files'}\n\nFiles: ${files.map(f => f.name).join(', ')}`
+    : text;
+
+  addMessage('user', shown);
+  history.push({role:'user', content:shown});
   prompt.value = '';
-  selectedFiles = [];
+  files = [];
+  fileInput.value = '';
   renderFiles();
   autoGrow();
-  sendButton.disabled = true;
-  addTyping();
-  setTimeout(() => {
-    removeTyping();
-    addMessage('assistant', demoReply(text || 'file upload'));
-    sendButton.disabled = false;
+  toggleAttach(false);
+
+  busy = true;
+  prompt.disabled = true;
+  attachButton.disabled = true;
+  typing();
+
+  try{
+    const r = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        messages: history,
+        think: thinkButton.classList.contains('active')
+      })
+    });
+    const data = await r.json().catch(() => ({}));
+    if(!r.ok) throw new Error(data.error || `Request failed (${r.status})`);
+    const answer = String(data.text || '').trim();
+    if(!answer) throw new Error('The AI returned no text.');
+    history.push({role:'assistant', content:answer});
+    stopTyping();
+    addMessage('assistant', answer);
+  }catch(error){
+    stopTyping();
+    addMessage('assistant', `Universal AI could not respond: ${error.message}`);
+  }finally{
+    busy = false;
+    prompt.disabled = false;
+    attachButton.disabled = false;
     prompt.focus();
-  }, 650);
+  }
 }
 
 function autoGrow(){
-  prompt.style.height = '40px';
-  prompt.style.height = `${Math.min(prompt.scrollHeight, 150)}px`;
+  prompt.style.height = '34px';
+  prompt.style.height = `${Math.min(prompt.scrollHeight,120)}px`;
 }
 
-function toggleAttachMenu(force){
+function toggleAttach(force){
   const open = typeof force === 'boolean' ? force : !attachMenu.classList.contains('open');
   attachMenu.classList.toggle('open', open);
   attachMenu.setAttribute('aria-hidden', String(!open));
@@ -82,35 +110,35 @@ function toggleAttachMenu(force){
 
 attachButton.addEventListener('click', e => {
   e.stopPropagation();
-  toggleAttachMenu();
+  if(!busy) toggleAttach();
 });
 
 document.addEventListener('click', e => {
-  if(!attachMenu.contains(e.target) && e.target !== attachButton) toggleAttachMenu(false);
+  if(!attachMenu.contains(e.target) && e.target !== attachButton) toggleAttach(false);
 });
 
 attachMenu.querySelectorAll('[data-file-kind]').forEach(button => {
   button.addEventListener('click', () => {
-    const kind = button.dataset.fileKind;
-    fileInput.accept = kind === 'image' ? 'image/*' : '';
-    toggleAttachMenu(false);
+    fileInput.accept = button.dataset.fileKind === 'image' ? 'image/*' : '';
+    toggleAttach(false);
     fileInput.click();
   });
 });
 
 fileInput.addEventListener('change', () => {
-  selectedFiles = Array.from(fileInput.files || []);
+  files = Array.from(fileInput.files || []);
   renderFiles();
 });
 
 function renderFiles(){
   fileChips.innerHTML = '';
-  selectedFiles.forEach((file, index) => {
+  files.forEach((file, index) => {
     const chip = document.createElement('div');
     chip.className = 'file-chip';
-    chip.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.8h7l4 4V20H7zM14 3.8V8h4"/></svg><span title="${file.name.replace(/"/g,'&quot;')}">${file.name}</span><button type="button" aria-label="Remove ${file.name}">×</button>`;
+    chip.innerHTML = '<span></span><button type="button">×</button>';
+    chip.querySelector('span').textContent = file.name;
     chip.querySelector('button').addEventListener('click', () => {
-      selectedFiles.splice(index, 1);
+      files.splice(index,1);
       renderFiles();
     });
     fileChips.appendChild(chip);
@@ -128,43 +156,29 @@ if(SpeechRecognition){
   recognition.lang = navigator.language || 'en-US';
   recognition.interimResults = true;
   recognition.continuous = false;
-
   recognition.onstart = () => {
     listening = true;
     micButton.classList.add('recording');
-    micButton.setAttribute('aria-pressed', 'true');
-    micButton.setAttribute('aria-label', 'Stop voice dictation');
+    micButton.setAttribute('aria-pressed','true');
   };
-
   recognition.onresult = event => {
-    let transcript = '';
-    for(let i = event.resultIndex; i < event.results.length; i++) transcript += event.results[i][0].transcript;
-    prompt.value = transcript;
+    let text = '';
+    for(let i = event.resultIndex; i < event.results.length; i++) text += event.results[i][0].transcript;
+    prompt.value = text;
     autoGrow();
   };
-
   recognition.onend = () => {
     listening = false;
     micButton.classList.remove('recording');
-    micButton.setAttribute('aria-pressed', 'false');
-    micButton.setAttribute('aria-label', 'Voice dictation');
+    micButton.setAttribute('aria-pressed','false');
     prompt.focus();
   };
-
   recognition.onerror = () => {
     listening = false;
     micButton.classList.remove('recording');
-    micButton.setAttribute('aria-pressed', 'false');
-    micButton.setAttribute('aria-label', 'Voice dictation');
+    micButton.setAttribute('aria-pressed','false');
   };
-
-  micButton.addEventListener('click', () => {
-    if(listening) recognition.stop();
-    else recognition.start();
-  });
-}else{
-  micButton.title = 'Voice dictation is not supported in this browser';
-  micButton.addEventListener('click', () => micButton.classList.add('unsupported'));
+  micButton.addEventListener('click', () => listening ? recognition.stop() : recognition.start());
 }
 
 composer.addEventListener('submit', e => {
