@@ -17,11 +17,40 @@
   </section>
 </main>
 
+<input id="fileInput" class="file-input" type="file" multiple hidden>
+
 <form class="composer" id="composer">
-  <textarea id="prompt" rows="1" placeholder="Message Universal AI..." aria-label="Message Universal AI"></textarea>
-  <button class="send-button" id="sendButton" type="submit" aria-label="Send message">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12 15-7-3.2 14-4.4-5.1L4 12Zm0 0 7.4-2.2"/></svg>
-  </button>
+  <div class="composer-main">
+    <button class="composer-icon" id="attachButton" type="button" aria-label="Attach files" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <textarea id="prompt" rows="1" placeholder="Message Universal AI..." aria-label="Message Universal AI"></textarea>
+  </div>
+  <div class="composer-actions">
+    <button class="mode-button" id="thinkButton" type="button" aria-pressed="false" aria-label="Toggle Think mode">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 18h5M10 21h4M8.3 14.8C7.5 14 7 12.9 7 11.6a5 5 0 0 1 10 0c0 1.3-.5 2.4-1.3 3.2-.6.6-1 1.1-1.2 2.1h-5c-.2-1-.6-1.5-1.2-2.1Z"/></svg>
+      <span>Think</span>
+    </button>
+    <button class="composer-icon mic-button" id="micButton" type="button" aria-label="Voice dictation" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M8.5 21h7"/></svg>
+    </button>
+    <button class="send-button" id="sendButton" type="submit" aria-label="Send message">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12 15-7-3.2 14-4.4-5.1L4 12Zm0 0 7.4-2.2"/></svg>
+    </button>
+  </div>
+
+  <div class="attach-menu" id="attachMenu" role="menu" aria-hidden="true">
+    <button type="button" data-file-kind="any" role="menuitem">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.8h7l4 4V20H7zM14 3.8V8h4M10 13h5M10 16h5"/></svg>
+      <span>Upload files</span>
+    </button>
+    <button type="button" data-file-kind="image" role="menuitem">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m5.5 17 4.2-4 3 2.5 2.2-2 3.6 3.5"/></svg>
+      <span>Upload photos</span>
+    </button>
+  </div>
+
+  <div class="file-chips" id="fileChips" aria-live="polite"></div>
 </form>
 
 <nav class="navbar" aria-label="Main navigation">
