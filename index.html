@@ -5,13 +5,29 @@
 </head>
 <body>
 <div class="ambient"></div><div class="ambient two"></div>
-<main><section class="hero"><div class="badge"><span class="dot"></span> Universal Arcade</div><h1>Play without limits.</h1><p>A clean, fast arcade built around a dark gray, black and white aesthetic. This is the starting foundation for the games site.</p><div class="preview"><div class="block"></div><div class="block"></div><div class="block"></div></div></section></main>
+<main class="home">
+  <section class="hero">
+    <div class="saturn-mark" aria-label="Universal Arcade logo">
+      <svg viewBox="0 0 180 120" role="img" aria-hidden="true">
+        <ellipse class="saturn-ring-back" cx="90" cy="62" rx="72" ry="23" transform="rotate(-11 90 62)"/>
+        <circle class="saturn-planet" cx="90" cy="60" r="29"/>
+        <ellipse class="saturn-ring-front" cx="90" cy="62" rx="72" ry="23" transform="rotate(-11 90 62)"/>
+      </svg>
+    </div>
+    <h1>Universal Arcade</h1>
+    <form class="game-search" id="gameSearch">
+      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 5 5"></path></svg>
+      <input id="gameSearchInput" type="search" placeholder="Search games..." autocomplete="off" aria-label="Search games">
+      <button type="submit">Search</button>
+    </form>
+  </section>
+</main>
 <nav class="navbar" aria-label="Main navigation">
-<a class="nav-item active" href="index.html" aria-label="Home"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-7h6v7"/></svg><span class="nav-label">Home</span><span class="nav-tooltip">Home</span></a>
-<a class="nav-item" href="games.html" aria-label="Games"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 8h9a4.5 4.5 0 0 1 4.35 5.65l-1.3 4.3a2.7 2.7 0 0 1-4.75.8L13.7 17h-3.4l-1.1 1.75a2.7 2.7 0 0 1-4.75-.8l-1.3-4.3A4.5 4.5 0 0 1 7.5 8Z"/><path d="M7 12v4M5 14h4"/><path d="M16.5 12.5h.01M18.5 15h.01"/><path d="M9 8 8 5h8l-1 3"/></svg><span class="nav-label">Games</span><span class="nav-tooltip">Games</span></a>
-<a class="nav-item" href="ai.html" aria-label="AI"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="4.5" width="15" height="15" rx="4"/><path d="M9 15.5 10.8 9h2.4l1.8 6.5"/><path d="M10 13.5h4"/><path d="M12 4.5V2.5M12 21.5v-2M4.5 12h-2M21.5 12h-2"/></svg><span class="nav-label">AI</span><span class="nav-tooltip">AI</span></a>
-<a class="nav-item" href="youtube.html" aria-label="YouTube"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 7.2a2.7 2.7 0 0 0-1.9-1.9C16.6 4.8 12 4.8 12 4.8s-4.6 0-6.3.5a2.7 2.7 0 0 0-1.9 1.9c-.5 1.7-.5 4.8-.5 4.8s0 3.1.5 4.8a2.7 2.7 0 0 0 1.9 1.9c1.7.5 6.3.5 6.3.5s4.6 0 6.3-.5a2.7 2.7 0 0 0 1.9-1.9c.5-1.7.5-4.8.5-4.8s0-3.1-.5-4.8Z"/><path d="m10 9 5 3-5 3V9Z"/></svg><span class="nav-label">YouTube</span><span class="nav-tooltip">YouTube</span></a>
-<a class="nav-item" href="settings.html" aria-label="Settings"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m19.4 15 .1-.2a2 2 0 0 0 0-1.6l-.1-.2 1.3-1-1.8-3.1-1.5.6a7 7 0 0 0-1.4-.8L15.8 7H12.2l-.2 1.7c-.5.2-.9.4-1.4.8l-1.5-.6-1.8 3.1 1.3 1-.1.2a2 2 0 0 0 0 1.6l.1.2-1.3 1 1.8 3.1 1.5-.6c.4.3.9.6 1.4.8l.2 1.7h3.6l.2-1.7c.5-.2 1-.4 1.4-.8l1.5.6 1.8-3.1-1.3-1Z"/><circle cx="12" cy="14" r="2.6"/></svg><span class="nav-label">Settings</span><span class="nav-tooltip">Settings</span></a>
+<a class="nav-item active" href="index.html" aria-label="Home"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-7h6v7"/></svg><span class="nav-label">Home</span></a>
+<a class="nav-item" href="games.html" aria-label="Games"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 8h9a4.5 4.5 0 0 1 4.35 5.65l-1.3 4.3a2.7 2.7 0 0 1-4.75.8L13.7 17h-3.4l-1.1 1.75a2.7 2.7 0 0 1-4.75-.8l-1.3-4.3A4.5 4.5 0 0 1 7.5 8Z"/><path d="M7 12v4M5 14h4"/><path d="M16.5 12.5h.01M18.5 15h.01"/><path d="M9 8 8 5h8l-1 3"/></svg><span class="nav-label">Games</span></a>
+<a class="nav-item" href="ai.html" aria-label="AI"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5.5A3.5 3.5 0 0 1 14 3a3.5 3.5 0 0 1 3 5.5A3.5 3.5 0 0 1 21 12a3.5 3.5 0 0 1-4.5 3.5A3.5 3.5 0 0 1 10 19a3.5 3.5 0 0 1-5-3A3.5 3.5 0 0 1 3 12a3.5 3.5 0 0 1 5-3.5Z"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg><span class="nav-label">AI</span></a>
+<a class="nav-item" href="youtube.html" aria-label="YouTube"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 7.2a2.7 2.7 0 0 0-1.9-1.9C16.6 4.8 12 4.8 12 4.8s-4.6 0-6.3.5a2.7 2.7 0 0 0-1.9 1.9c-.5 1.7-.5 4.8-.5 4.8s0 3.1.5 4.8a2.7 2.7 0 0 0 1.9 1.9c1.7.5 6.3.5 6.3.5s4.6 0 6.3-.5a2.7 2.7 0 0 0 1.9-1.9c.5-1.7.5-4.8.5-4.8s0-3.1-.5-4.8Z"/><path d="m10 9 5 3-5 3V9Z"/></svg><span class="nav-label">YouTube</span></a>
+<a class="nav-item" href="settings.html" aria-label="Settings"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m19.4 15 .1-.2a2 2 0 0 0 0-1.6l-.1-.2 1.3-1-1.8-3.1-1.5.6a7 7 0 0 0-1.4-.8L15.8 7H12.2l-.2 1.7c-.5.2-.9.4-1.4.8l-1.5-.6-1.8 3.1 1.3 1-.1.2a2 2 0 0 0 0 1.6l.1.2-1.3 1 1.8 3.1 1.5-.6c.4.3.9.6 1.4.8l.2 1.7h3.6l.2-1.7c.5-.2 1-.4 1.4-.8l1.5.6 1.8-3.1-1.3-1Z"/><circle cx="12" cy="14" r="2.6"/></svg><span class="nav-label">Settings</span></a>
 </nav>
 <script src="js/app.js"></script>
 </body></html>
