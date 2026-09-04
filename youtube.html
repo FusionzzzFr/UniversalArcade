@@ -2,264 +2,92 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="theme-color" content="#050505">
   <title>YouTube • Universal Arcade</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    .youtube-page{
-      width:min(1180px,calc(100% - 40px));
-      height:100%;
-      margin:0 auto;
-      padding:54px 0 130px;
-      overflow:auto;
-      scrollbar-width:none;
-    }
-    .youtube-page::-webkit-scrollbar{display:none}
-
-    .youtube-head{text-align:center;margin-bottom:28px}
-    .youtube-logo{
-      width:74px;height:74px;margin:0 auto 16px;
-      display:grid;place-items:center;
-      border:1px solid rgba(255,255,255,.16);
-      border-radius:24px;
-      background:rgba(255,255,255,.055);
-      box-shadow:0 18px 45px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.08);
-      backdrop-filter:blur(22px);
-      -webkit-backdrop-filter:blur(22px);
-    }
-    .youtube-logo svg{width:38px;height:38px;fill:#fff}
-    .youtube-head h1{font-size:clamp(34px,5vw,58px);line-height:1;margin:0 0 10px;letter-spacing:-.04em}
-    .youtube-head p{margin:0;color:rgba(255,255,255,.55);font-size:15px}
-
-    .yt-search-wrap{
-      width:min(820px,100%);
-      margin:0 auto 24px;
-      display:flex;
-      gap:10px;
-    }
-    .yt-search{
-      flex:1;
-      min-width:0;
-      height:62px;
-      padding:0 20px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
-      outline:none;
-      color:#fff;
-      background:rgba(255,255,255,.065);
-      box-shadow:inset 0 1px rgba(255,255,255,.05),0 15px 40px rgba(0,0,0,.18);
-      backdrop-filter:blur(20px);
-      -webkit-backdrop-filter:blur(20px);
-      font:inherit;
-      font-size:16px;
-      transition:.2s ease;
-    }
-    .yt-search::placeholder{color:rgba(255,255,255,.35)}
-    .yt-search:focus{border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.085);transform:translateY(-1px)}
-    .yt-button{
-      height:62px;
-      padding:0 22px;
-      border:1px solid rgba(255,255,255,.18);
-      border-radius:18px;
-      background:#fff;
-      color:#050505;
-      cursor:pointer;
-      font:700 15px/1 inherit;
-      box-shadow:0 12px 32px rgba(255,255,255,.09);
-      transition:transform .2s ease,box-shadow .2s ease;
-      white-space:nowrap;
-    }
-    .yt-button:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(255,255,255,.15)}
-    .yt-button:active{transform:translateY(0)}
-
-    .yt-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,.7fr);gap:18px}
-    .yt-card{
-      border:1px solid rgba(255,255,255,.1);
-      border-radius:26px;
-      background:rgba(255,255,255,.045);
-      box-shadow:0 22px 60px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.045);
-      backdrop-filter:blur(24px);
-      -webkit-backdrop-filter:blur(24px);
-    }
-    .player-card{padding:12px}
-    .player{
-      position:relative;
-      width:100%;
-      aspect-ratio:16/9;
-      overflow:hidden;
-      border-radius:19px;
-      background:#000;
-    }
-    .player iframe{width:100%;height:100%;border:0;display:block}
-    .player-empty{
-      position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:30px;
-      color:rgba(255,255,255,.5);
-    }
-    .player-empty strong{display:block;color:#fff;font-size:20px;margin-bottom:7px}
-    .player-empty span{font-size:14px}
-
-    .side-card{padding:20px}
-    .side-card h2{font-size:17px;margin:0 0 14px}
-    .quick-list{display:grid;gap:9px}
-    .quick{
-      width:100%;
-      text-align:left;
-      color:#fff;
-      border:1px solid rgba(255,255,255,.09);
-      border-radius:15px;
-      background:rgba(255,255,255,.045);
-      padding:14px;
-      cursor:pointer;
-      transition:.18s ease;
-      font:inherit;
-    }
-    .quick:hover{background:rgba(255,255,255,.09);transform:translateY(-2px)}
-    .quick strong{display:block;font-size:14px;margin-bottom:4px}
-    .quick span{display:block;font-size:12px;color:rgba(255,255,255,.42)}
-
-    .note{
-      width:min(820px,100%);margin:18px auto 0;text-align:center;
-      color:rgba(255,255,255,.35);font-size:12px;line-height:1.6;
-    }
-    .note a{color:rgba(255,255,255,.72);text-decoration:none}
-    .note a:hover{text-decoration:underline}
-
-    @media(max-width:850px){
-      .youtube-page{width:min(100% - 24px,700px);padding-top:32px}
-      .yt-layout{grid-template-columns:1fr}
-      .yt-search-wrap{flex-direction:column}
-      .yt-button{width:100%}
-    }
-    @media(max-width:560px){
-      .youtube-head{margin-bottom:22px}
-      .youtube-logo{width:64px;height:64px;border-radius:20px}
-      .youtube-logo svg{width:32px;height:32px}
-      .youtube-head h1{font-size:36px}
-      .youtube-head p{font-size:13px}
-      .yt-search{height:56px;border-radius:16px}
-      .yt-button{height:56px;border-radius:16px}
-      .player-card{padding:8px;border-radius:20px}
-      .player{border-radius:14px}
-    }
+    :root{--yt-border:rgba(255,255,255,.10);--yt-panel:rgba(255,255,255,.045);--yt-muted:rgba(255,255,255,.48)}
+    .yt-page{height:100%;overflow:auto;padding:24px 24px 120px;scrollbar-width:none}.yt-page::-webkit-scrollbar{display:none}
+    .yt-shell{max-width:1500px;margin:0 auto}
+    .yt-top{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:210px minmax(280px,760px) 180px;gap:24px;align-items:center;padding:10px 0 20px;background:linear-gradient(#050505 78%,transparent)}
+    .yt-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:800;font-size:20px;letter-spacing:-.04em}
+    .yt-brand-mark{width:38px;height:28px;border-radius:9px;background:#fff;display:grid;place-items:center}.yt-brand-mark svg{width:18px;height:18px;fill:#050505}
+    .yt-searchbar{display:flex;height:50px}.yt-searchbar input{flex:1;min-width:0;border:1px solid var(--yt-border);border-right:0;border-radius:15px 0 0 15px;background:rgba(255,255,255,.055);color:#fff;outline:0;padding:0 18px;font:inherit}.yt-searchbar input::placeholder{color:rgba(255,255,255,.34)}
+    .yt-searchbar button,.yt-mic{border:1px solid var(--yt-border);background:rgba(255,255,255,.07);color:#fff;cursor:pointer}.yt-searchbar button{width:62px;border-radius:0 15px 15px 0}.yt-searchbar svg,.yt-mic svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.yt-mic{width:50px;height:50px;margin-left:10px;border-radius:50%;display:none}
+    .yt-actions{display:flex;justify-content:flex-end;gap:9px}.yt-pill{height:42px;padding:0 14px;border:1px solid var(--yt-border);border-radius:14px;color:#fff;background:var(--yt-panel);font:600 13px inherit;cursor:pointer}.yt-pill:hover{background:rgba(255,255,255,.09)}
+    .yt-body{display:grid;grid-template-columns:210px minmax(0,1fr);gap:28px}.yt-side{position:sticky;top:95px;height:max-content;display:grid;gap:6px}.yt-side button{width:100%;height:44px;border:0;border-radius:13px;background:transparent;color:rgba(255,255,255,.66);text-align:left;padding:0 14px;font:600 13px inherit;cursor:pointer}.yt-side button:hover,.yt-side button.active{background:rgba(255,255,255,.08);color:#fff}.yt-side .sep{height:1px;background:var(--yt-border);margin:8px 0}.yt-side small{padding:0 14px;color:rgba(255,255,255,.27);font-size:10px;text-transform:uppercase;letter-spacing:.14em}
+    .yt-heading{display:flex;align-items:end;justify-content:space-between;margin:8px 0 18px}.yt-heading h1{margin:0;font-size:30px;letter-spacing:-.05em}.yt-heading p{margin:5px 0 0;color:var(--yt-muted);font-size:12px}.yt-status{color:rgba(255,255,255,.38);font-size:11px}
+    .yt-chips{display:flex;gap:8px;overflow:auto;margin:0 0 20px;padding-bottom:2px;scrollbar-width:none}.yt-chips::-webkit-scrollbar{display:none}.yt-chip{flex:0 0 auto;border:1px solid var(--yt-border);background:var(--yt-panel);color:rgba(255,255,255,.7);padding:9px 13px;border-radius:999px;cursor:pointer;font:600 12px inherit}.yt-chip.active,.yt-chip:hover{background:#fff;color:#050505}
+    .yt-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 18px}.yt-card{min-width:0;border-radius:16px;cursor:pointer;transition:transform .18s ease}.yt-card:hover{transform:translateY(-3px)}.yt-thumb{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#111;border:1px solid var(--yt-border);box-shadow:0 18px 40px rgba(0,0,0,.18)}.yt-thumb img{width:100%;height:100%;display:block;object-fit:cover}.yt-time{position:absolute;right:8px;bottom:8px;padding:4px 6px;border-radius:5px;background:rgba(0,0,0,.82);color:#fff;font-size:10px;font-weight:800}.yt-info{display:grid;grid-template-columns:34px minmax(0,1fr);gap:9px;padding:10px 2px}.yt-avatar{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid var(--yt-border);display:grid;place-items:center;font-size:11px;font-weight:800}.yt-title{margin:0;color:#fff;font-size:13px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.yt-meta{margin-top:5px;color:rgba(255,255,255,.39);font-size:11px;line-height:1.4}.yt-empty{padding:55px 20px;text-align:center;border:1px dashed var(--yt-border);border-radius:18px;color:var(--yt-muted);display:none}.yt-empty strong{display:block;color:#fff;font-size:16px;margin-bottom:7px}.yt-empty.show{display:block}.yt-loading{min-height:260px;display:grid;place-items:center;color:var(--yt-muted)}
+    .yt-watch{display:none}.yt-watch.show{display:block}.yt-watch-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px}.yt-player{background:#000;border-radius:16px;overflow:hidden;border:1px solid var(--yt-border);aspect-ratio:16/9}.yt-player iframe{width:100%;height:100%;border:0}.yt-watch-title{font-size:22px;line-height:1.25;margin:14px 0 8px;letter-spacing:-.03em}.yt-watch-meta{color:var(--yt-muted);font-size:12px}.yt-description{margin-top:14px;padding:16px;border:1px solid var(--yt-border);background:var(--yt-panel);border-radius:15px;color:rgba(255,255,255,.66);font-size:12px;line-height:1.55;white-space:pre-wrap}.yt-related h2{font-size:15px;margin:3px 0 12px}.yt-related .yt-grid{grid-template-columns:1fr;gap:14px}.yt-related .yt-info{padding-top:7px}
+    .yt-back{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--yt-border);background:var(--yt-panel);color:#fff;border-radius:12px;height:38px;padding:0 12px;cursor:pointer;font:600 12px inherit;margin-bottom:14px}.yt-back svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:2}
+    .yt-more{display:flex;justify-content:center;padding:22px}.yt-more button{height:42px;padding:0 18px;border-radius:12px;border:1px solid var(--yt-border);background:var(--yt-panel);color:#fff;font:600 12px inherit;cursor:pointer}.yt-more button:hover{background:rgba(255,255,255,.09)}
+    @media(max-width:1100px){.yt-top{grid-template-columns:180px minmax(240px,1fr)}.yt-actions{display:none}.yt-body{grid-template-columns:180px minmax(0,1fr)}.yt-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.yt-watch-layout{grid-template-columns:1fr}.yt-related .yt-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:760px){.yt-page{padding:10px 12px 110px}.yt-top{grid-template-columns:1fr;padding-bottom:14px}.yt-brand{display:none}.yt-searchbar{height:48px}.yt-mic{display:grid;place-items:center}.yt-searchbar button{height:48px}.yt-body{display:block}.yt-side{position:static;display:flex;gap:7px;overflow:auto;padding-bottom:14px}.yt-side button{flex:0 0 auto;width:auto;padding:0 13px}.yt-side .sep,.yt-side small{display:none}.yt-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 11px}.yt-heading h1{font-size:24px}.yt-heading{margin-top:4px}.yt-related .yt-grid{grid-template-columns:1fr}}
+    @media(max-width:460px){.yt-grid{grid-template-columns:1fr}.yt-title{font-size:14px}.yt-thumb{border-radius:12px}.yt-info{padding-top:8px}.yt-heading p{display:none}}
   </style>
 </head>
 <body>
-  <main class="youtube-page">
-    <header class="youtube-head">
-      <div class="youtube-logo" aria-hidden="true">
-        <svg viewBox="0 0 24 24">
-          <path d="M21.58 7.19a2.99 2.99 0 0 0-2.1-2.12C17.62 4.5 12 4.5 12 4.5s-5.62 0-7.48.57a2.99 2.99 0 0 0-2.1 2.12C1.85 9.05 1.85 12 1.85 12s0 2.95.57 4.81a2.99 2.99 0 0 0 2.1 2.12c1.86.57 7.48.57 7.48.57s5.62 0 7.48-.57a2.99 2.99 0 0 0 2.1-2.12c.57-1.86.57-4.81.57-4.81s0-2.95-.57-4.81ZM10.2 15.4V8.6l6.05 3.4-6.05 3.4Z"/>
-        </svg>
-      </div>
-      <h1>YouTube</h1>
-      <p>Watch videos inside Universal Arcade.</p>
-    </header>
+  <main class="yt-page">
+    <div class="yt-shell">
+      <header class="yt-top">
+        <a class="yt-brand" href="youtube.html" aria-label="YouTube home"><span class="yt-brand-mark"><svg viewBox="0 0 24 24"><path d="M21.6 7.2a2.9 2.9 0 0 0-2.05-2.05C17.74 4.6 12 4.6 12 4.6s-5.74 0-7.55.55A2.9 2.9 0 0 0 2.4 7.2C1.85 9 1.85 12 1.85 12s0 3 .55 4.8a2.9 2.9 0 0 0 2.05 2.05c1.81.55 7.55.55 7.55.55s5.74 0 7.55-.55a2.9 2.9 0 0 0 2.05-2.05c.55-1.8.55-4.8.55-4.8s0-3-.55-4.8ZM10 15.5v-7l5 3.5-5 3.5Z"/></svg></span><span>YouTube</span></a>
+        <form class="yt-searchbar" id="searchForm"><input id="searchInput" autocomplete="off" placeholder="Search videos"><button type="submit" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.6"/><path d="m16 16 5 5"/></svg></button><button class="yt-mic" type="button" id="micButton" aria-label="Voice search"><svg viewBox="0 0 24 24"><rect x="8" y="3" width="8" height="12" rx="4"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg></button></form>
+        <div class="yt-actions"><button class="yt-pill" id="homeButton">Home</button><button class="yt-pill" id="trendingButton">Trending</button></div>
+      </header>
 
-    <form class="yt-search-wrap" id="videoForm">
-      <input
-        id="videoInput"
-        class="yt-search"
-        type="text"
-        autocomplete="off"
-        placeholder="Paste a YouTube link or video ID..."
-        aria-label="YouTube video URL or ID"
-      >
-      <button class="yt-button" type="submit">Watch</button>
-    </form>
+      <div class="yt-body">
+        <aside class="yt-side">
+          <button class="active" data-home>Home</button><button data-query="trending">Trending</button><button data-query="gaming">Gaming</button><button data-query="music">Music</button><button data-query="news">News</button><button data-query="sports">Sports</button>
+          <div class="sep"></div><small>Universal Arcade</small><button data-query="minecraft">Minecraft</button><button data-query="fortnite">Fortnite</button><button data-query="funny videos">Funny</button>
+        </aside>
 
-    <section class="yt-layout">
-      <div class="yt-card player-card">
-        <div class="player" id="player">
-          <div class="player-empty" id="emptyState">
-            <div>
-              <strong>Ready to watch</strong>
-              <span>Paste a YouTube video link above to load it here.</span>
-            </div>
+        <section>
+          <div id="browseView">
+            <div class="yt-heading"><div><h1 id="browseTitle">Home</h1><p id="browseSubtitle">Popular and trending videos</p></div><span class="yt-status" id="status"></span></div>
+            <div class="yt-chips" id="chips"><button class="yt-chip active" data-query="">All</button><button class="yt-chip" data-query="gaming">Gaming</button><button class="yt-chip" data-query="music">Music</button><button class="yt-chip" data-query="minecraft">Minecraft</button><button class="yt-chip" data-query="fortnite">Fortnite</button><button class="yt-chip" data-query="funny videos">Funny</button><button class="yt-chip" data-query="trailers">Trailers</button></div>
+            <div class="yt-grid" id="videoGrid"></div><div class="yt-empty" id="emptyState"><strong>No videos found</strong><span>Try another search.</span></div><div class="yt-loading" id="loading">Loading videos…</div><div class="yt-more"><button id="moreButton" hidden>Load more</button></div>
           </div>
-        </div>
+
+          <div class="yt-watch" id="watchView">
+            <button class="yt-back" id="backButton"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>Back to browse</button>
+            <div class="yt-watch-layout"><div><div class="yt-player" id="ytPlayer"></div><h1 class="yt-watch-title" id="watchTitle"></h1><div class="yt-watch-meta" id="watchMeta"></div><div class="yt-description" id="watchDescription"></div></div><aside class="yt-related"><h2>Up next</h2><div class="yt-grid" id="relatedGrid"></div></aside></div>
+          </div>
+        </section>
       </div>
-
-      <aside class="yt-card side-card">
-        <h2>Quick picks</h2>
-        <div class="quick-list">
-          <button class="quick" data-id="dQw4w9WgXcQ"><strong>Sample video</strong><span>Load a video instantly</span></button>
-          <button class="quick" data-id="jNQXAC9IVRw"><strong>Classic sample</strong><span>Another ready-to-play video</span></button>
-          <button class="quick" data-id="9bZkp7q19f0"><strong>Music sample</strong><span>Open a YouTube video</span></button>
-        </div>
-      </aside>
-    </section>
-
-    <p class="note">
-      This page uses YouTube's standard embedded player. Videos still depend on whether YouTube and the video are available on the network.
-      <a href="https://www.youtube.com/" target="_blank" rel="noopener">Open YouTube</a>
-    </p>
+    </div>
   </main>
 
   <nav class="navbar" aria-label="Main navigation">
-    <a class="nav-item" href="index.html" aria-label="Home">
-      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5v8a1.5 1.5 0 0 1-1.5 1.5h-5v-6h-5v6h-5A1.5 1.5 0 0 1 3 19.5Z"/></svg>
-      <span class="nav-label">Home</span>
-    </a>
-    <a class="nav-item" href="games.html" aria-label="Games">
-      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="16" height="10" rx="4"/><path d="M8 12h4M10 10v4M16 11h.01M18 13h.01"/></svg>
-      <span class="nav-label">Games</span>
-    </a>
-    <a class="nav-item" href="cloud.html" aria-label="Cloud">
-      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 18.2h10.1a3.7 3.7 0 0 0 .6-7.35A5.7 5.7 0 0 0 7 10.1a4.05 4.05 0 0 0 .2 8.1Z"/></svg>
-      <span class="nav-label">Cloud</span>
-    </a>
-    <a class="nav-item active" href="youtube.html" aria-label="YouTube">
-      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.2a2.9 2.9 0 0 0-2.05-2.05C17.74 4.6 12 4.6 12 4.6s-5.74 0-7.55.55A2.9 2.9 0 0 0 2.4 7.2C1.85 9 1.85 12 1.85 12s0 3 .55 4.8a2.9 2.9 0 0 0 2.05 2.05c1.81.55 7.55.55 7.55.55s5.74 0 7.55-.55a2.9 2.9 0 0 0 2.05-2.05c.55-1.8.55-4.8.55-4.8s0-3-.55-4.8Z"/><path d="m10 15.5 5-3.5-5-3.5v7Z"/></svg>
-      <span class="nav-label">YouTube</span>
-    </a>
-    <a class="nav-item" href="settings.html" aria-label="Settings">
-      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="m19.4 15 .1.2a1.8 1.8 0 0 1-2.5 2.5l-.2-.1a1.7 1.7 0 0 0-2.6 1.2v.2a1.8 1.8 0 0 1-3.6 0v-.2a1.7 1.7 0 0 0-2.6-1.2l-.2.1a1.8 1.8 0 0 1-2.5-2.5l.1-.2A1.7 1.7 0 0 0 6.2 12a1.7 1.7 0 0 0-1.8-2.6h-.2a1.8 1.8 0 0 1 0-3.6h.2A1.7 1.7 0 0 0 6.2 3.2l-.1-.2a1.8 1.8 0 0 1 2.5-2.5l.2.1A1.7 1.7 0 0 0 11.4-.6h.2a1.8 1.8 0 0 1 3.6 0v.2a1.7 1.7 0 0 0 2.6 1.2l.2-.1a1.8 1.8 0 0 1 2.5 2.5l-.1.2A1.7 1.7 0 0 0 21.6 6a1.7 1.7 0 0 0 1.8 2.6h.2a1.8 1.8 0 0 1 0 3.6h-.2A1.7 1.7 0 0 0 21.6 15Z" transform="translate(-.8 3.4) scale(.84)"/></svg>
-      <span class="nav-label">Settings</span>
-    </a>
+    <a class="nav-item" href="index.html" aria-label="Home"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5v8a1.5 1.5 0 0 1-1.5 1.5h-5v-6h-5v6h-5A1.5 1.5 0 0 1 3 19.5Z"/></svg><span class="nav-label">Home</span></a>
+    <a class="nav-item" href="games.html" aria-label="Games"><svg class="nav-icon" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="10" rx="4"/><path d="M8 12h4M10 10v4M16 11h.01M18 13h.01"/></svg><span class="nav-label">Games</span></a>
+    <a class="nav-item" href="cloud.html" aria-label="Cloud"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M7.2 18.2h10.1a3.7 3.7 0 0 0 .6-7.35A5.7 5.7 0 0 0 7 10.1a4.05 4.05 0 0 0 .2 8.1Z"/></svg><span class="nav-label">Cloud</span></a>
+    <a class="nav-item active" href="youtube.html" aria-label="YouTube"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M21.6 7.2a2.9 2.9 0 0 0-2.05-2.05C17.74 4.6 12 4.6 12 4.6s-5.74 0-7.55.55A2.9 2.9 0 0 0 2.4 7.2C1.85 9 1.85 12 1.85 12s0 3 .55 4.8a2.9 2.9 0 0 0 2.05 2.05c1.81.55 7.55.55 7.55.55s5.74 0 7.55-.55a2.9 2.9 0 0 0 2.05-2.05c.55-1.8.55-4.8.55-4.8s0-3-.55-4.8Z"/><path d="m10 15.5 5-3.5-5-3.5v7Z"/></svg><span class="nav-label">YouTube</span></a>
+    <a class="nav-item" href="settings.html" aria-label="Settings"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="m19.4 15 .1.2a1.8 1.8 0 0 1-2.5 2.5l-.2-.1a1.7 1.7 0 0 0-2.6 1.2v.2a1.8 1.8 0 0 1-3.6 0v-.2a1.7 1.7 0 0 0-2.6-1.2l-.2.1a1.8 1.8 0 0 1-2.5-2.5l.1-.2A1.7 1.7 0 0 0 6.2 12a1.7 1.7 0 0 0-1.8-2.6h-.2a1.8 1.8 0 0 1 0-3.6h.2A1.7 1.7 0 0 0 6.2 3.2l-.1-.2a1.8 1.8 0 0 1 2.5-2.5l.2.1A1.7 1.7 0 0 0 11.4-.6h.2a1.8 1.8 0 0 1 3.6 0v.2a1.7 1.7 0 0 0 2.6 1.2l.2-.1A1.8 1.8 0 0 0 21.6 15Z"/></svg><span class="nav-label">Settings</span></a>
   </nav>
 
   <script>
-    const form = document.getElementById('videoForm');
-    const input = document.getElementById('videoInput');
-    const player = document.getElementById('player');
-
-    function extractVideoId(value){
-      const raw = value.trim();
-      if(!raw) return '';
-      if(/^[A-Za-z0-9_-]{11}$/.test(raw)) return raw;
-      try{
-        const url = new URL(raw);
-        if(url.hostname.includes('youtu.be')) return url.pathname.slice(1).split('/')[0];
-        if(url.hostname.includes('youtube.com')){
-          const id = url.searchParams.get('v');
-          if(id) return id;
-          const parts = url.pathname.split('/').filter(Boolean);
-          const index = parts.findIndex(p => ['embed','shorts','live'].includes(p));
-          if(index !== -1 && parts[index + 1]) return parts[index + 1];
-        }
-      }catch(e){}
-      return '';
-    }
-
-    function loadVideo(id){
-      if(!id) return;
-      player.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?rel=0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
-    }
-
-    form.addEventListener('submit', event => {
-      event.preventDefault();
-      const id = extractVideoId(input.value);
-      if(id) loadVideo(id);
-      else input.focus();
-    });
-
-    document.querySelectorAll('.quick').forEach(button => {
-      button.addEventListener('click', () => {
-        input.value = button.dataset.id;
-        loadVideo(button.dataset.id);
-      });
-    });
+    const API_INSTANCES=['https://inv.nadeko.net','https://invidious.nerdvpn.de','https://yt.chocolatemoo53.com'];
+    let instanceIndex=0,currentQuery='',currentPage=1,currentResults=[],watching=null;
+    const $=id=>document.getElementById(id);const searchForm=$('searchForm'),searchInput=$('searchInput'),grid=$('videoGrid'),loading=$('loading'),empty=$('emptyState'),status=$('status'),more=$('moreButton'),browseView=$('browseView'),watchView=$('watchView'),player=$('ytPlayer');
+    const escapeHTML=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+    function thumb(v){const t=v.videoThumbnails||[];return (t.find(x=>x.quality==='medium'||x.quality==='high')||t[t.length-1]||{}).url||`https://i.ytimg.com/vi/${v.videoId}/hqdefault.jpg`}
+    function fmt(n){n=Number(n||0);if(n>=1e9)return (n/1e9).toFixed(1)+'B';if(n>=1e6)return (n/1e6).toFixed(1)+'M';if(n>=1e3)return (n/1e3).toFixed(1)+'K';return n.toString()}
+    function duration(s){s=Number(s||0);const h=Math.floor(s/3600),m=Math.floor(s%3600/60).toString().padStart(2,'0'),sec=Math.floor(s%60).toString().padStart(2,'0');return h?`${h}:${m}:${sec}`:`${Number(m)}:${sec}`}
+    function initials(name){return String(name||'U').trim().slice(0,1).toUpperCase()}
+    function card(v){return `<article class="yt-card" data-id="${escapeHTML(v.videoId)}"><div class="yt-thumb"><img loading="lazy" src="${escapeHTML(thumb(v))}" alt=""><span class="yt-time">${duration(v.lengthSeconds)}</span></div><div class="yt-info"><div class="yt-avatar">${escapeHTML(initials(v.author))}</div><div><h2 class="yt-title">${escapeHTML(v.title)}</h2><div class="yt-meta">${escapeHTML(v.author||'Unknown channel')}<br>${fmt(v.viewCount)} views${v.publishedText?' • '+escapeHTML(v.publishedText):''}</div></div></div></article>`}
+    async function api(path){for(let i=0;i<API_INSTANCES.length;i++){const base=API_INSTANCES[(instanceIndex+i)%API_INSTANCES.length];try{const r=await fetch(base+path,{headers:{accept:'application/json'}});if(!r.ok)throw new Error('HTTP '+r.status);instanceIndex=(instanceIndex+i)%API_INSTANCES.length;return await r.json()}catch(e){}}throw new Error('No video service is available right now.')}
+    function setLoading(on){loading.style.display=on?'grid':'none'}
+    async function browse(query='',page=1,append=false){currentQuery=query;currentPage=page;empty.classList.remove('show');setLoading(true);if(!append)grid.innerHTML='';status.textContent=query?'Searching…':'Loading…';try{let data=query?await api(`/api/v1/search?q=${encodeURIComponent(query)}&page=${page}&type=video&region=US`):await api('/api/v1/trending?type=default&region=US');data=(Array.isArray(data)?data:[]).filter(v=>v&&v.videoId);currentResults=append?currentResults.concat(data):data;grid.innerHTML=currentResults.map(card).join('');status.textContent=`${currentResults.length} videos`;more.hidden=!query;more.textContent='Load more';if(!currentResults.length)empty.classList.add('show')}catch(e){grid.innerHTML='';empty.innerHTML=`<strong>Couldn’t load videos</strong><span>${escapeHTML(e.message)}</span>`;empty.classList.add('show');status.textContent='Offline';more.hidden=true}finally{setLoading(false)}}
+    async function watch(id){const item=currentResults.find(v=>v.videoId===id);if(!item)return;watching=item;browseView.style.display='none';watchView.classList.add('show');player.innerHTML=`<iframe src="https://www.youtube.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="Video player"></iframe>`;$('watchTitle').textContent=item.title;$('watchMeta').textContent=`${item.author||'Unknown channel'} • ${fmt(item.viewCount)} views${item.publishedText?' • '+item.publishedText:''}`;$('watchDescription').textContent=item.description||'No description available.';$('relatedGrid').innerHTML=currentResults.filter(v=>v.videoId!==id).slice(0,6).map(card).join('');window.scrollTo({top:0,behavior:'smooth'})}
+    function home(){browseView.style.display='block';watchView.classList.remove('show');player.innerHTML='';watching=null;setNav('Home');browse('',1,false);$('browseTitle').textContent='Home';$('browseSubtitle').textContent='Popular and trending videos'}
+    function setNav(label){document.querySelectorAll('.yt-side button').forEach(b=>b.classList.toggle('active',b.textContent===label));document.querySelectorAll('.yt-chip').forEach(b=>b.classList.toggle('active',(label==='Home'&&b.dataset.query==='')||b.textContent===label))}
+    function doSearch(q){q=String(q||'').trim();if(!q){home();return}watchView.classList.remove('show');browseView.style.display='block';$('browseTitle').textContent='Search results';$('browseSubtitle').textContent=q;setNav('');browse(q,1,false)}
+    searchForm.addEventListener('submit',e=>{e.preventDefault();doSearch(searchInput.value)});$('homeButton').onclick=home;$('trendingButton').onclick=()=>{setNav('Trending');$('browseTitle').textContent='Trending';$('browseSubtitle').textContent='What people are watching';browse('',1,false)};$('backButton').onclick=()=>{browseView.style.display='block';watchView.classList.remove('show');player.innerHTML='';window.scrollTo({top:0,behavior:'smooth'})};more.onclick=()=>browse(currentQuery,currentPage+1,true);grid.addEventListener('click',e=>{const c=e.target.closest('.yt-card');if(c)watch(c.dataset.id)});$('relatedGrid').addEventListener('click',e=>{const c=e.target.closest('.yt-card');if(c)watch(c.dataset.id)});
+    document.querySelectorAll('.yt-side [data-query],.yt-chips [data-query]').forEach(b=>b.addEventListener('click',()=>{const q=b.dataset.query;searchInput.value=q;document.querySelectorAll('.yt-side button').forEach(x=>x.classList.remove('active'));if(b.closest('.yt-side'))b.classList.add('active');document.querySelectorAll('.yt-chip').forEach(x=>x.classList.toggle('active',x===b));if(q){$('browseTitle').textContent='Browse '+q.replace(/\b\w/g,m=>m.toUpperCase());$('browseSubtitle').textContent='Videos';browse(q,1,false)}else home()}));
+    $('micButton').onclick=()=>{if('webkitSpeechRecognition' in window){const r=new webkitSpeechRecognition();r.lang='en-US';r.onresult=e=>{searchInput.value=e.results[0][0].transcript;doSearch(searchInput.value)};r.start()}else searchInput.focus()};
+    home();
   </script>
 </body>
 </html>
