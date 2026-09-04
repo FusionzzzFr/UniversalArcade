@@ -9,26 +9,23 @@
 <body>
 <div class="ambient"></div>
 <div class="ambient two"></div>
-
 <main class="home">
   <section class="hero">
     <div class="saturn-mark" aria-label="Universal Arcade logo">
       <svg viewBox="0 0 200 140" role="img" aria-hidden="true">
+        <defs><linearGradient id="saturnFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bdbdc1"/></linearGradient></defs>
         <ellipse class="saturn-ring-back" cx="100" cy="70" rx="78" ry="25" transform="rotate(-12 100 70)"/>
         <circle class="saturn-planet" cx="100" cy="68" r="31"/>
         <ellipse class="saturn-ring-front" cx="100" cy="70" rx="78" ry="25" transform="rotate(-12 100 70)"/>
       </svg>
     </div>
     <h1>Universal Arcade</h1>
-    <p class="hero-subtitle">Find a game and start playing.</p>
     <form class="game-search" id="gameSearch">
       <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 5 5"></path></svg>
       <input id="gameSearchInput" type="search" placeholder="Search games..." autocomplete="off" aria-label="Search games">
-      <button type="submit" aria-label="Search games">Search</button>
     </form>
   </section>
 </main>
-
 <nav class="navbar" aria-label="Main navigation">
 <a class="nav-item active" href="index.html" aria-label="Home"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-7h6v7"/></svg><span class="nav-label">Home</span></a>
 <a class="nav-item" href="games.html" aria-label="Games"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 8h9a4.5 4.5 0 0 1 4.35 5.65l-1.3 4.3a2.7 2.7 0 0 1-4.75.8L13.7 17h-3.4l-1.1 1.75a2.7 2.7 0 0 1-4.75-.8l-1.3-4.3A4.5 4.5 0 0 1 7.5 8Z"/><path d="M7 12v4M5 14h4"/><path d="M16.5 12.5h.01M18.5 15h.01"/><path d="M9 8 8 5h8l-1 3"/></svg><span class="nav-label">Games</span></a>
