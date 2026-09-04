@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050505">
+  <title>YouTube • Universal Arcade</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .youtube-page{
+      width:min(1180px,calc(100% - 40px));
+      height:100%;
+      margin:0 auto;
+      padding:54px 0 130px;
+      overflow:auto;
+      scrollbar-width:none;
+    }
+    .youtube-page::-webkit-scrollbar{display:none}
+
+    .youtube-head{text-align:center;margin-bottom:28px}
+    .youtube-logo{
+      width:74px;height:74px;margin:0 auto 16px;
+      display:grid;place-items:center;
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:24px;
+      background:rgba(255,255,255,.055);
+      box-shadow:0 18px 45px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.08);
+      backdrop-filter:blur(22px);
+      -webkit-backdrop-filter:blur(22px);
+    }
+    .youtube-logo svg{width:38px;height:38px;fill:#fff}
+    .youtube-head h1{font-size:clamp(34px,5vw,58px);line-height:1;margin:0 0 10px;letter-spacing:-.04em}
+    .youtube-head p{margin:0;color:rgba(255,255,255,.55);font-size:15px}
+
+    .yt-search-wrap{
+      width:min(820px,100%);
+      margin:0 auto 24px;
+      display:flex;
+      gap:10px;
+    }
+    .yt-search{
+      flex:1;
+      min-width:0;
+      height:62px;
+      padding:0 20px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      outline:none;
+      color:#fff;
+      background:rgba(255,255,255,.065);
+      box-shadow:inset 0 1px rgba(255,255,255,.05),0 15px 40px rgba(0,0,0,.18);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      font:inherit;
+      font-size:16px;
+      transition:.2s ease;
+    }
+    .yt-search::placeholder{color:rgba(255,255,255,.35)}
+    .yt-search:focus{border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.085);transform:translateY(-1px)}
+    .yt-button{
+      height:62px;
+      padding:0 22px;
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:18px;
+      background:#fff;
+      color:#050505;
+      cursor:pointer;
+      font:700 15px/1 inherit;
+      box-shadow:0 12px 32px rgba(255,255,255,.09);
+      transition:transform .2s ease,box-shadow .2s ease;
+      white-space:nowrap;
+    }
+    .yt-button:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(255,255,255,.15)}
+    .yt-button:active{transform:translateY(0)}
+
+    .yt-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,.7fr);gap:18px}
+    .yt-card{
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:26px;
+      background:rgba(255,255,255,.045);
+      box-shadow:0 22px 60px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.045);
+      backdrop-filter:blur(24px);
+      -webkit-backdrop-filter:blur(24px);
+    }
+    .player-card{padding:12px}
+    .player{
+      position:relative;
+      width:100%;
+      aspect-ratio:16/9;
+      overflow:hidden;
+      border-radius:19px;
+      background:#000;
+    }
+    .player iframe{width:100%;height:100%;border:0;display:block}
+    .player-empty{
+      position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:30px;
+      color:rgba(255,255,255,.5);
+    }
+    .player-empty strong{display:block;color:#fff;font-size:20px;margin-bottom:7px}
+    .player-empty span{font-size:14px}
+
+    .side-card{padding:20px}
+    .side-card h2{font-size:17px;margin:0 0 14px}
+    .quick-list{display:grid;gap:9px}
+    .quick{
+      width:100%;
+      text-align:left;
+      color:#fff;
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:15px;
+      background:rgba(255,255,255,.045);
+      padding:14px;
+      cursor:pointer;
+      transition:.18s ease;
+      font:inherit;
+    }
+    .quick:hover{background:rgba(255,255,255,.09);transform:translateY(-2px)}
+    .quick strong{display:block;font-size:14px;margin-bottom:4px}
+    .quick span{display:block;font-size:12px;color:rgba(255,255,255,.42)}
+
+    .note{
+      width:min(820px,100%);margin:18px auto 0;text-align:center;
+      color:rgba(255,255,255,.35);font-size:12px;line-height:1.6;
+    }
+    .note a{color:rgba(255,255,255,.72);text-decoration:none}
+    .note a:hover{text-decoration:underline}
+
+    @media(max-width:850px){
+      .youtube-page{width:min(100% - 24px,700px);padding-top:32px}
+      .yt-layout{grid-template-columns:1fr}
+      .yt-search-wrap{flex-direction:column}
+      .yt-button{width:100%}
+    }
+    @media(max-width:560px){
+      .youtube-head{margin-bottom:22px}
+      .youtube-logo{width:64px;height:64px;border-radius:20px}
+      .youtube-logo svg{width:32px;height:32px}
+      .youtube-head h1{font-size:36px}
+      .youtube-head p{font-size:13px}
+      .yt-search{height:56px;border-radius:16px}
+      .yt-button{height:56px;border-radius:16px}
+      .player-card{padding:8px;border-radius:20px}
+      .player{border-radius:14px}
+    }
+  </style>
+</head>
+<body>
+  <main class="youtube-page">
+    <header class="youtube-head">
+      <div class="youtube-logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M21.58 7.19a2.99 2.99 0 0 0-2.1-2.12C17.62 4.5 12 4.5 12 4.5s-5.62 0-7.48.57a2.99 2.99 0 0 0-2.1 2.12C1.85 9.05 1.85 12 1.85 12s0 2.95.57 4.81a2.99 2.99 0 0 0 2.1 2.12c1.86.57 7.48.57 7.48.57s5.62 0 7.48-.57a2.99 2.99 0 0 0 2.1-2.12c.57-1.86.57-4.81.57-4.81s0-2.95-.57-4.81ZM10.2 15.4V8.6l6.05 3.4-6.05 3.4Z"/>
+        </svg>
+      </div>
+      <h1>YouTube</h1>
+      <p>Watch videos inside Universal Arcade.</p>
+    </header>
+
+    <form class="yt-search-wrap" id="videoForm">
+      <input
+        id="videoInput"
+        class="yt-search"
+        type="text"
+        autocomplete="off"
+        placeholder="Paste a YouTube link or video ID..."
+        aria-label="YouTube video URL or ID"
+      >
+      <button class="yt-button" type="submit">Watch</button>
+    </form>
+
+    <section class="yt-layout">
+      <div class="yt-card player-card">
+        <div class="player" id="player">
+          <div class="player-empty" id="emptyState">
+            <div>
+              <strong>Ready to watch</strong>
+              <span>Paste a YouTube video link above to load it here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="yt-card side-card">
+        <h2>Quick picks</h2>
+        <div class="quick-list">
+          <button class="quick" data-id="dQw4w9WgXcQ"><strong>Sample video</strong><span>Load a video instantly</span></button>
+          <button class="quick" data-id="jNQXAC9IVRw"><strong>Classic sample</strong><span>Another ready-to-play video</span></button>
+          <button class="quick" data-id="9bZkp7q19f0"><strong>Music sample</strong><span>Open a YouTube video</span></button>
+        </div>
+      </aside>
+    </section>
+
+    <p class="note">
+      This page uses YouTube's standard embedded player. Videos still depend on whether YouTube and the video are available on the network.
+      <a href="https://www.youtube.com/" target="_blank" rel="noopener">Open YouTube</a>
+    </p>
+  </main>
+
+  <nav class="navbar" aria-label="Main navigation">
+    <a class="nav-item" href="index.html" aria-label="Home">
+      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5v8a1.5 1.5 0 0 1-1.5 1.5h-5v-6h-5v6h-5A1.5 1.5 0 0 1 3 19.5Z"/></svg>
+      <span class="nav-label">Home</span>
+    </a>
+    <a class="nav-item" href="games.html" aria-label="Games">
+      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="16" height="10" rx="4"/><path d="M8 12h4M10 10v4M16 11h.01M18 13h.01"/></svg>
+      <span class="nav-label">Games</span>
+    </a>
+    <a class="nav-item" href="cloud.html" aria-label="Cloud">
+      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 18.2h10.1a3.7 3.7 0 0 0 .6-7.35A5.7 5.7 0 0 0 7 10.1a4.05 4.05 0 0 0 .2 8.1Z"/></svg>
+      <span class="nav-label">Cloud</span>
+    </a>
+    <a class="nav-item active" href="youtube.html" aria-label="YouTube">
+      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.2a2.9 2.9 0 0 0-2.05-2.05C17.74 4.6 12 4.6 12 4.6s-5.74 0-7.55.55A2.9 2.9 0 0 0 2.4 7.2C1.85 9 1.85 12 1.85 12s0 3 .55 4.8a2.9 2.9 0 0 0 2.05 2.05c1.81.55 7.55.55 7.55.55s5.74 0 7.55-.55a2.9 2.9 0 0 0 2.05-2.05c.55-1.8.55-4.8.55-4.8s0-3-.55-4.8Z"/><path d="m10 15.5 5-3.5-5-3.5v7Z"/></svg>
+      <span class="nav-label">YouTube</span>
+    </a>
+    <a class="nav-item" href="settings.html" aria-label="Settings">
+      <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="m19.4 15 .1.2a1.8 1.8 0 0 1-2.5 2.5l-.2-.1a1.7 1.7 0 0 0-2.6 1.2v.2a1.8 1.8 0 0 1-3.6 0v-.2a1.7 1.7 0 0 0-2.6-1.2l-.2.1a1.8 1.8 0 0 1-2.5-2.5l.1-.2A1.7 1.7 0 0 0 6.2 12a1.7 1.7 0 0 0-1.8-2.6h-.2a1.8 1.8 0 0 1 0-3.6h.2A1.7 1.7 0 0 0 6.2 3.2l-.1-.2a1.8 1.8 0 0 1 2.5-2.5l.2.1A1.7 1.7 0 0 0 11.4-.6h.2a1.8 1.8 0 0 1 3.6 0v.2a1.7 1.7 0 0 0 2.6 1.2l.2-.1a1.8 1.8 0 0 1 2.5 2.5l-.1.2A1.7 1.7 0 0 0 21.6 6a1.7 1.7 0 0 0 1.8 2.6h.2a1.8 1.8 0 0 1 0 3.6h-.2A1.7 1.7 0 0 0 21.6 15Z" transform="translate(-.8 3.4) scale(.84)"/></svg>
+      <span class="nav-label">Settings</span>
+    </a>
+  </nav>
+
+  <script>
+    const form = document.getElementById('videoForm');
+    const input = document.getElementById('videoInput');
+    const player = document.getElementById('player');
+
+    function extractVideoId(value){
+      const raw = value.trim();
+      if(!raw) return '';
+      if(/^[A-Za-z0-9_-]{11}$/.test(raw)) return raw;
+      try{
+        const url = new URL(raw);
+        if(url.hostname.includes('youtu.be')) return url.pathname.slice(1).split('/')[0];
+        if(url.hostname.includes('youtube.com')){
+          const id = url.searchParams.get('v');
+          if(id) return id;
+          const parts = url.pathname.split('/').filter(Boolean);
+          const index = parts.findIndex(p => ['embed','shorts','live'].includes(p));
+          if(index !== -1 && parts[index + 1]) return parts[index + 1];
+        }
+      }catch(e){}
+      return '';
+    }
+
+    function loadVideo(id){
+      if(!id) return;
+      player.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?rel=0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+    }
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const id = extractVideoId(input.value);
+      if(id) loadVideo(id);
+      else input.focus();
+    });
+
+    document.querySelectorAll('.quick').forEach(button => {
+      button.addEventListener('click', () => {
+        input.value = button.dataset.id;
+        loadVideo(button.dataset.id);
+      });
+    });
+  </script>
+</body>
+</html>
