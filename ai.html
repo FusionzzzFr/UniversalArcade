@@ -11,44 +11,97 @@
 <div class="ambient"></div>
 <div class="ambient two"></div>
 
-<header class="ai-header">
-  <div class="ai-brand"><span class="ai-brand-dot"></span><span>Universal AI</span></div>
-  <button class="new-chat" id="newChat" type="button" aria-label="New chat">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+<aside class="ai-sidebar" aria-label="AI sidebar">
+  <div class="sidebar-top">
+    <a class="ai-logo" href="index.html" aria-label="Universal Arcade home">
+      <span class="ai-logo-mark">UA</span>
+      <span>Universal AI</span>
+    </a>
+    <button class="sidebar-new" id="newChat" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      <span>New chat</span>
+      <kbd>⌘ N</kbd>
+    </button>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-title">Chats</div>
+    <div class="recent-chats" id="recentChats">
+      <button class="chat-link active" type="button"><span class="chat-dot"></span><span class="chat-name">New conversation</span></button>
+    </div>
+  </div>
+
+  <div class="sidebar-bottom">
+    <button class="side-link" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 5 5"/></svg>
+      <span>Search</span>
+    </button>
+    <button class="side-link" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 4.5h11a2 2 0 0 1 2 2v13l-7.5-3.5-7.5 3.5v-13a2 2 0 0 1 2-2Z"/></svg>
+      <span>Saved</span>
+    </button>
+    <div class="sidebar-user">
+      <div class="user-avatar">U</div>
+      <div><strong>Universal Arcade</strong><span>Personal</span></div>
+      <span class="user-more">•••</span>
+    </div>
+  </div>
+</aside>
+
+<header class="ai-topbar">
+  <button class="mobile-menu" type="button" aria-label="Open menu">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
   </button>
+  <button class="model-switcher" type="button">
+    <span>Universal</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+  </button>
+  <div class="top-actions">
+    <button class="top-action" type="button" aria-label="Share">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>
+    </button>
+    <button class="top-action" type="button" aria-label="More options"><span>•••</span></button>
+  </div>
 </header>
 
 <main class="ai-main">
   <section class="chat-area" aria-label="AI chat">
     <div class="welcome" id="welcome">
-      <div class="welcome-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="5" y="6" width="14" height="12" rx="4"/>
-          <circle cx="9" cy="11.8" r="1" fill="currentColor" stroke="none"/>
-          <circle cx="15" cy="11.8" r="1" fill="currentColor" stroke="none"/>
-          <path d="M9.5 15h5M9 5V3.5M15 5V3.5"/>
-        </svg>
+      <div class="grok-style-mark" aria-hidden="true">
+        <span></span><span></span><span></span>
       </div>
       <h1>What can I help with?</h1>
-      <p>Ask anything, or start with a prompt below.</p>
+      <p>Ask anything, create something, or explore an idea.</p>
       <div class="suggestions">
-        <button type="button" class="suggestion">Give me a game idea</button>
-        <button type="button" class="suggestion">Help me build a website</button>
-        <button type="button" class="suggestion">Explain something simply</button>
-        <button type="button" class="suggestion">Write some code</button>
+        <button type="button" class="suggestion"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/><path d="M8 9h8M8 12h6M8 15h4"/></svg><span>Write something</span></button>
+        <button type="button" class="suggestion"><svg viewBox="0 0 24 24"><path d="M4.5 6.5h15v11h-15z"/><path d="M8 14l2.5-3 2 2 1.5-2 2 3"/></svg><span>Analyze an image</span></button>
+        <button type="button" class="suggestion"><svg viewBox="0 0 24 24"><path d="M5 6h14v12H5z"/><path d="m9 9 6 3-6 3V9Z"/></svg><span>Plan a project</span></button>
+        <button type="button" class="suggestion"><svg viewBox="0 0 24 24"><path d="m12 3 1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3Z"/></svg><span>Get creative</span></button>
       </div>
     </div>
     <div class="messages" id="messages" aria-live="polite"></div>
   </section>
 </main>
 
-<div class="composer-area">
+<div class="composer-wrap">
+  <div class="composer-hints">
+    <button type="button">Fast</button>
+    <button type="button">Reason</button>
+    <button type="button">Search</button>
+  </div>
   <form class="composer" id="composer">
-    <textarea id="prompt" rows="1" placeholder="Message Universal AI..." aria-label="Message Universal AI"></textarea>
+    <button class="composer-tool" type="button" aria-label="Add attachment">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <textarea id="prompt" rows="1" placeholder="What are you curious about?" aria-label="Message Universal AI"></textarea>
+    <button class="composer-tool" type="button" aria-label="Voice">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M8.5 21h7"/></svg>
+    </button>
     <button class="send-button" id="sendButton" type="submit" aria-label="Send message">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12 15-7-3.2 14-4.4-5.1L4 12Zm0 0 7.4-2.2"/></svg>
     </button>
   </form>
+  <div class="composer-note">Universal AI can make mistakes. Check important information.</div>
 </div>
 
 <nav class="navbar" aria-label="Main navigation">
